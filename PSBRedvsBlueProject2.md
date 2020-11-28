@@ -99,21 +99,23 @@ Port 22 and 80 was of interest to me.
 
 **Tools & Processes**
 
+I used the website crackstation.net to crack the hashed password.
+
 **Achievements**
 
-● I used the website crackstation.net to crack the hashed password.
-● The password ‘**linux4u**’ was used in conjunction with username **Ryan** to access the **/webdav** folder.
+The password ‘**linux4u**’ was used in conjunction with username **Ryan** to access the **/webdav** folder.
 
 # Exploitation: **LFI vulnerability**
 
 **Tools & Processes**
 
+I used msfvenom and meterpreter to deliver a payload onto the vulnerable machine (the capstone server)
+
 **Achievements**
 
-I used msfvenom and meterpreter to deliver a payload onto the vulnerable machine (the capstone server)
 Using the **multi/handler** exploit I could get access to the machine’s shell.
 
-# **Blue Team**
+# **Blue Team** 
 ## Log Analysis and Attack Characterization
 
 ### Analysis: Identifying the Port Scan
@@ -145,11 +147,11 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 
 # Mitigation: Blocking the Port Scan
 
-Alarm
-
-System Hardening
+## Alarm
 
 I recommend an alert be sent once 1000 connections occur in an hour.
+
+## System Hardening
 
 ● Regularly run a system port scan to proactively detect and audit any open ports.
 ● Set server iptables to drop packet traffic when thresholds are exceeded
@@ -158,73 +160,68 @@ I recommend an alert be sent once 1000 connections occur in an hour.
 
 # Mitigation: Finding the Request for the Hidden Directory
 
-Alarm
+## Alarm
 
-System Hardening
+To detect unauthorized access requests for hidden folders and files, I would set an alert when these requests occur.
 
-To detect unauthorized accessrequests for hidden folders and files, I would set an alert when these requests occur.
+I would recommend a threshold of maximum 5 attempts per hour that would trigger an alert to be sent.
+
+## System Hardening
 
 ● Highly confidential folders should not be shared for public access
 ● Rename folders containing sensitive/private/company critical data
 ● Encrypt data contained within confidential folders
 ● Review IP addresses that cause an alert to be sent: either whitelist or block the IP addresses.
 
-I would recommend a threshold of maximum 5 attempts per hour that would trigger an alert to be sent.
-
 # Mitigation: Preventing Brute Force Attacks
 
-Alarm
-
-System Hardening
+## Alarm
 
 A HTTP 401 Unauthorized client error indicates that the request has ot been applied because it lacks valid authentication credentials for the target resource.
 
+● I would detect future brute force attacks by setting an alarm that alerts if a 401 error is returned.
+● The threshold I would set to activate this alarm would be when 10 errors are returned.
+
+## System Hardening
+
 ● I would create a policy that locks out accounts for 30 minutes after 5 unsuccessful attempts.
 ● I would create a password policy that requires password complexity. I would compare the passwords to common password lists, and prevent users from reusing historical passwords.
-
-I would detect future brute force attacks by setting an alarm that alerts if a 401 error is returned.
-
-The threshold I would set to activate this alarm would be when 10 errors are returned.
-
 ● I would create a list of blocked IP addresses based on IP addresses that have 30 unsuccessful attempts in 6 months. If the IP address happens to be a staff member, re-education may be required.
 
 
 # Mitigation: Detecting the WebDAV Connection
 
-Alarm
-
-System Hardening
+## Alarm
 
 First, I would create a Whitelist of trusted IP Addresses. Review this list every 6 months: ‘do they really need access?’
 
+On HTTP GET request, I would set an alarm that activates on any IP address trying to access the webDAV directory outside of those trusted IP addresses.
+
+The threshold I would set to activate this alarm would be when any **HTTP PUT** request is made.
+
+## System Hardening
+
 ● Creating a whitelist of trusted IP addresses and ensure my firewall security policy prevents all other access.
-
 [APDX001] [APDX002]
-
-On **HTTP GET** request, I would set an alarm that activates on any IP address trying to access the webDAV directory outside of those trusted IP addresses.
 
 Assuming my IP address is 192.168.1.1, within Ubuntu I would run the following command:
 $ iptables -I INPUT -s **192.168.1.1** -p tcp -m multiport --dports 80,443 -j ACCEPT
 
 ● In conjunction with other mitigation strategies, I would ensure that any access to the WebDAV folder is only permitted by users with complex username and passwords.
 
-The threshold I would set to activate this alarm would be when any **HTTP PUT** request is made.
-
 # Mitigation: Identifying Reverse Shell Uploads
 
-Alarm
-
-## System Hardening
+## Alarm
 
 I recommend that an alert be set for any traffic attempting to access port 4444. The threshold for the alert to be sent is when one or more attempt is made.
 
-● Block all IP addresses other than whitelisted IP addresses (because reverse shells can be created over DNS, this action will only limit the risk of reverse shell connections, not eliminate the risk)
-● Set access to the /webDAV folder to read only to prevent payloads from being uploaded
-
 I recommend setting an alert for any files being uploaded into the /webDAV folder.
-
 The threshold for the alert to be sent is when one or more attempt is made.
 
+## System Hardening
+
+● Block all IP addresses other than whitelisted IP addresses (because reverse shells can be created over DNS, this action will only limit the risk of reverse shell connections, not eliminate the risk)
+● Set access to the /webDAV folder to read only to prevent payloads from being uploaded
 ● Ensure only necessary ports are open
 
 [APDX003]
@@ -263,15 +260,7 @@ The following pages are a list of references and relevant screenshots.
 ● APDX001
 
 ● APDX002
-
-[https://support.stackpath.com/hc/en-](https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables)
-
-[us/articles/360001074623-How-To-Whitelist](https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables)[-](https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables)
-
-[StackPath-IP-Blocks-in-IPTable](https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables)[s](https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables)
+https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables
 
 ● APDX003
-
-[http://help.sonicwall.com/help/sw/eng/9530/26/2/3/c](http://help.sonicwall.com/help/sw/eng/9530/26/2/3/content/Application_Control.065.23.htm)
-
-[ontent/Application_Control.065.23.htm](http://help.sonicwall.com/help/sw/eng/9530/26/2/3/content/Application_Control.065.23.htm)
+http://help.sonicwall.com/help/sw/eng/9530/26/2/3/content/Application_Control.065.23.htm
