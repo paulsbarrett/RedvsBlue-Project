@@ -28,24 +28,26 @@ Please refer to the Appendix at the end of this report for additional references
 
 ![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/network_topology.png)
 
-  - Network Address Range: 192.168.1.0/24
+Network Address Range: 192.168.1.0/24
   - Netmask: 255.255.255.0
   - Gateway: 10.0.0.76
-  - Machines IPv4: 19.168.1.1
-  - OS: Windows 10
 
+Machines 
+  IPv4: 19.168.1.1
+  - OS: Windows 10
   - Hostname: Azure Hyper-V ML-RefVm-684427
-  - IPv4:192.168.1.90
+
+  IPv4:192.168.1.90
   - OS: Linux 2.6.32
   - Hostname: Kali
-  - IPv4: 192.168.1.100
+  
+  IPv4: 192.168.1.100
   - OS: Linux
-
   - Hostname: ELK-Stack
-  - IPv4: 192.168.1.105
+  
+  IPv4: 192.168.1.105
   - OS: Linux
   - Hostname: Capstone
-  - Capstone Analysis
 
 # **Red Team** 
 ## Security Assessment
