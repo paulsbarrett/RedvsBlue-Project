@@ -1,34 +1,32 @@
 
 
-## Capstone Engagement
+# Capstone Engagement
+# Assessment, Analysis,
+# and Hardening of a Vulnerable System
 
-## Assessment, Analysis,
-
-## and Hardening of a Vulnerable System
-
-# Report Prepared by Paul Barrett
+### Report Prepared by Paul Barrett
 
 
 
 
 
-## Table of Contents
+# Table of Contents
 
-# 01 **Network Topology**
+## 01 **Network Topology**
 
-# 02 **Red Team**: Security Assessment
+## 02 **Red Team**: Security Assessment
 
-# 03 **Blue Team**: Log Analysis and Attack Characterization
+## 03 **Blue Team**: Log Analysis and Attack Characterization
 
-# 04 **Hardening**: Proposed Alarms and Mitigation Strategies
+## 04 **Hardening**: Proposed Alarms and Mitigation Strategies
 
-# 05 **Assessment Summary**
+## 05 **Assessment Summary**
 
-# 06 **Appendix**
+## 06 **Appendix**
 
 
 
-## Preface
+# Preface
 
 This report has been prepared for the purpose of identifying critical vulnerbilities on my client’s network. The targeted approach undertaken was to first use the Red Team to identify risks and penetrate in similar ways that a hacker might. This is a highly recommended approach to testing how your existing cybersecurity defenses stack up.
 
@@ -46,7 +44,7 @@ Please refer to the Appendix at the end of this report for additional references
 
 
 
-## Network Topology
+# Network Topology
 
 
 
@@ -74,12 +72,12 @@ Capstone Analysis
 
 
 
-### **Red Team**
+# **Red Team**
 
 Security Assessment
 
 
-# Recon: Describing the Target
+### Recon: Describing the Target
 
 Nmap identified the following hosts on the network:
 
@@ -125,7 +123,7 @@ Replicating a vulnerable server
 
 
 
-Vulnerability Assessment
+# Vulnerability Assessment
 
 The assessment uncovered the following critical vulnerabilities in the target:
 
@@ -149,13 +147,13 @@ Authorization to execute and command, and access any resource on the vulnerable 
 
 Vulnerabilities can be leveraged. Extensive potential Impact to any connected network.
 
-# Simplistic Usernames
+## Simplistic Usernames
 
 First name, short names, or similar information can be easily socially engineered
 
 ‘Hannah’, ‘Ryan’ and ‘ashton’ are all predictable names that can be discovered by social engineering. In conjunction with a simple/ weak password, file/folder access can be attained.
 
-# Weak Passwords
+## Weak Passwords
 
 Commonly used passwords such as simple words, and the lack of password complexity, such as the inclusion of symbols, numbers and capitals.
 
@@ -169,7 +167,7 @@ System access could be discovered by social engineering.
 
 
 
-## Vulnerability Assessment
+# Vulnerability Assessment
 
 **Vulnerability**
 
@@ -177,25 +175,25 @@ System access could be discovered by social engineering.
 
 **Impact**
 
-# Ability to discover password by Brute force.
+## Ability to discover password by Brute force.
 
 When an attacker uses numerous username and password combinations to access a device and/or system.
 
 Easy system access by use of brute force with common password lists such as rockyou.txt by programs such as ‘John the ripper’, Hydra, Medusa, Ophcrack, Brutus and ‘Cain and Able’.
 
-# Hashed Passwords
+## Hashed Passwords
 
 If a password is not salted it can be cracked via online tools such as [www.crackstation.ne](http://www.crackstation.net/)[t](http://www.crackstation.net/)[ ](http://www.crackstation.net/) or programs such as hashcat.
 
 Once the password is cracked, and if a user name is already known, a hacker can access system files.
 
-# Directory Indexing vulnerability CWE-548
+## Directory Indexing vulnerability CWE-548
 
 Attacker can view and download content of a directory located on a vulnerable device.
 
 The attacker can gain access to source code, or devise other exploits. The directory listing can compromise private or confidential data.
 
-# LFI Vulnerability
+## LFI Vulnerability
 
 LFI allows access into confidential files on a vulnerable machine.
 
@@ -205,7 +203,7 @@ An LFI vulnerability allows attackers to gain access to sensitive credentials. T
 
 
 
-## Vulnerability Assessment
+# Vulnerability Assessment
 
 **Vulnerability**
 
@@ -213,7 +211,7 @@ An LFI vulnerability allows attackers to gain access to sensitive credentials. T
 
 **Impact**
 
-# WebDAV Vulnerability
+## WebDAV Vulnerability
 
 Exploit WebDAV on a server and Shell access is possible.
 
@@ -283,7 +281,7 @@ The password ‘**linux4u**’ was used in conjunction with username **Ryan** to
 
 
 
-Exploitation: **LFI vulnerability**
+# Exploitation: **LFI vulnerability**
 
 01
 
@@ -299,12 +297,12 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 
 
 
-### **Blue Team**
+# **Blue Team**
 
 ## Log Analysis and Attack Characterization
 
 
-# Analysis: Identifying the Port Scan
+### Analysis: Identifying the Port Scan
 
 ● The port scan started on November 17, 2020 at approximately 0900hrs
 
@@ -316,7 +314,7 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 
 
 
-Analysis: Finding the Request for a Hidden Directory
+### Analysis: Finding the Request for a Hidden Directory
 
 ● The request started at 0700hrs on 17th November 2020
 
@@ -330,7 +328,7 @@ Analysis: Finding the Request for a Hidden Directory
 
 
 
-Analysis: Uncovering a Brute Force Attack
+### Analysis: Uncovering a Brute Force Attack
 
 ● 109,843 requests were made in the attack to access the **/secret_folder**.
 
@@ -340,7 +338,7 @@ Analysis: Uncovering a Brute Force Attack
 
 
 
-Analysis: Finding the WebDAV Connection
+### Analysis: Finding the WebDAV Connection
 
 ● 96 requests were made to access the **/webdav** directory.
 
@@ -350,16 +348,12 @@ Analysis: Finding the WebDAV Connection
 
 
 
-### **Blue Team**
+# **Blue Team**
 
 ## Proposed Alarms and Mitigation Strategies
 
 
-
-
-
-
-## Mitigation: Blocking the Port Scan
+# Mitigation: Blocking the Port Scan
 
 Alarm
 
@@ -377,9 +371,7 @@ I recommend an alert be sent once 1000 connections occur in an hour.
 
 
 
-
-
-## Mitigation: Finding the Request for the Hidden Directory
+# Mitigation: Finding the Request for the Hidden Directory
 
 Alarm
 
@@ -399,9 +391,7 @@ I would recommend a threshold of maximum 5 attempts per hour that would trigger 
 
 
 
-
-
-## Mitigation: Preventing Brute Force Attacks
+# Mitigation: Preventing Brute Force Attacks
 
 Alarm
 
@@ -421,8 +411,7 @@ The threshold I would set to activate this alarm would be when 10 errors are ret
 
 
 
-
-## Mitigation: Detecting the WebDAV Connection
+# Mitigation: Detecting the WebDAV Connection
 
 Alarm
 
@@ -445,13 +434,11 @@ The threshold I would set to activate this alarm would be when any **HTTP PUT** 
 
 
 
-
-
-## Mitigation: Identifying Reverse Shell Uploads
+# Mitigation: Identifying Reverse Shell Uploads
 
 Alarm
 
-# System Hardening
+## System Hardening
 
 I recommend that an alert be set for any traffic attempting to access port 4444. The threshold for the alert to be sent is when one or more attempt is made.
 
@@ -468,18 +455,15 @@ The threshold for the alert to be sent is when one or more attempt is made.
 [APDX003]
 
 
+# Assessment Summary
 
-
-
-### Assessment Summary
-
-# The Red Team uncovered the following vulnerabilities:
+## The Red Team uncovered the following vulnerabilities:
 
 ● Accessed the system via HTTP Port 80
 
 ● Found Root accessibility
 
-# The Blue Team also:
+## The Blue Team also:
 
 ● Confirmed that a port scan occurred
 
@@ -511,7 +495,7 @@ It is important to note that the above report is not an exhaustive review of the
 
 
 
-### Appendix
+# Appendix
 
 The following pages are a list of references and relevant screenshots.
 
