@@ -2,6 +2,7 @@
 # Assessment, Analysis, and Hardening of a Vulnerable System
 ### Report Prepared by Paul Barrett
 
+
 # Table of Contents
 
 ## 01 **Network Topology**
@@ -10,6 +11,7 @@
 ## 04 **Hardening**: Proposed Alarms and Mitigation Strategies
 ## 05 **Assessment Summary**
 ## 06 **Appendix**
+
 
 # Preface
 
@@ -23,6 +25,8 @@ Please refer to the Appendix at the end of this report for additional references
 **27th November 2020**
 
 # Network Topology
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/network_topology.png)
 
 Network Address Range: 192.168.1.0/24
 Netmask: 255.255.255.0
@@ -84,6 +88,9 @@ I used Hydra which is already preinstalled on Kali Linux. I also required a pass
 The exploit provided me with confirmation of the login name ‘**ashton**’ as well as the password ‘**leopoldo**’.
 
 User access achieved.
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/brute_force_ashton.png)
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/hydra_results.png)
 
 # Exploitation: **Port 80 Open to Public Access**
 
@@ -97,6 +104,8 @@ Nmap scanned 256 IP addresses: I found 4 hosts up:
 
 Port 22 and 80 was of interest to me.
 
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/nmap_results.png)
+
 # Exploitation: **Hashed Passwords**
 
 **Tools & Processes**
@@ -107,6 +116,8 @@ I used the website crackstation.net to crack the hashed password.
 
 The password ‘**linux4u**’ was used in conjunction with username **Ryan** to access the **/webdav** folder.
 
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/hash_password_cracked.png)
+
 # Exploitation: **LFI vulnerability**
 
 **Tools & Processes**
@@ -116,6 +127,8 @@ I used msfvenom and meterpreter to deliver a payload onto the vulnerable machine
 **Achievements**
 
 Using the **multi/handler** exploit I could get access to the machine’s shell.
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/meterpreter_results.png)
 
 # **Blue Team** 
 ## Log Analysis and Attack Characterization
@@ -128,6 +141,8 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 
 ● The sudden peaks in network traffic indicate that this was a port scan.
 
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/portscan_connections.png)
+
 ### Analysis: Finding the Request for a Hidden Directory
 
 ● The request started at 0700hrs on 17th November 2020
@@ -138,17 +153,23 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 
 ● The **/secret_folder** also allowed me to upload a payload, thus exploiting other vulnerabilities.
 
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/http_requests.png)
+
 ### Analysis: Uncovering a Brute Force Attack
 
 ● 109,843 requests were made in the attack to access the **/secret_folder**.
 
 ● 30 attacks were successful. 100% of these attacks returned a 301 HTTP status code “Moved Permanently”.
 
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/secret_folder_http_requests.png)
+
 ### Analysis: Finding the WebDAV Connection
 
 ● 96 requests were made to access the **/webdav** directory.
 
 ● The primary requests were for the **passwd.dav** and **shell.php** files.
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/webdav_requests.png)
 
 # **Blue Team**
 
@@ -159,6 +180,8 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ## Alarm
 
 I recommend an alert be sent once 1000 connections occur in an hour.
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/portscan_connections.png)
 
 ## System Hardening
 
@@ -197,6 +220,8 @@ A HTTP 401 Unauthorized client error indicates that the request has ot been appl
 ● I would detect future brute force attacks by setting an alarm that alerts if a 401 error is returned.
 
 ● The threshold I would set to activate this alarm would be when 10 errors are returned.
+
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/401_error.png)
 
 ## System Hardening
 
@@ -288,6 +313,7 @@ It is important to note that the above report is not an exhaustive review of the
 The following pages are a list of references and relevant screenshots.
 
 ● APDX001
+![](https://github.com/paulsbarrett/RedvsBlue-Project/blob/main/images/APDX001.png)
 
 ● APDX002
 
