@@ -1,8 +1,7 @@
 
 
 # Capstone Engagement
-# Assessment, Analysis,
-# and Hardening of a Vulnerable System
+# Assessment, Analysis, and Hardening of a Vulnerable System
 
 ### Report Prepared by Paul Barrett
 
@@ -34,7 +33,7 @@ Once sufficient vulnerabilities have been identified, the blue team then approac
 
 Based on the above red team blue team assessment, mitigation strategies are then recommended.
 
-Please refer to the Appendix at the end of this report for additional references and screenshots. These references can be identified as [APDX000]
+Please refer to the Appendix at the end of this report for additional references and screenshots. These references can be identified as *[APDX000]*
 
 **Paul Barrett**
 **SOC Analyst**
@@ -45,8 +44,6 @@ Please refer to the Appendix at the end of this report for additional references
 
 
 # Network Topology
-
-
 
 Network Topology
 
