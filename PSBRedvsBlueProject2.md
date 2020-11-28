@@ -15,7 +15,7 @@
 
 # Preface
 
-This report has been prepared for the purpose of identifying critical vulnerbilities on my client’s network. The targeted approach undertaken was to first use the Red Team to identify risks and penetrate in similar ways that a hacker might. This is a highly recommended approach to testing how your existing cybersecurity defenses stack up.
+This report has been prepared for the purpose of identifying critical vulnerabilities on my client’s network. The targeted approach undertaken was to first use the Red Team to identify risks and penetrate in similar ways that a hacker might. This is a highly recommended approach to testing how your existing cybersecurity defenses stack up.
 Once sufficient vulnerabilities have been identified, the blue team then approaches the critical vulnerbilities and makes sure the recommended security measures will be effective after implementation.
 Based on the above red team blue team assessment, mitigation strategies are then recommended.
 Please refer to the Appendix at the end of this report for additional references and screenshots. These references can be identified as **[APDX000]**
