@@ -44,7 +44,7 @@ Hostname: Capstone
 Capstone Analysis
 
 # **Red Team** 
-##Security Assessment
+## Security Assessment
 
 ### Recon: Describing the Target
 Nmap identified the following hosts on the network:
@@ -82,6 +82,7 @@ I used Hydra which is already preinstalled on Kali Linux. I also required a pass
 **Achievements**
 
 The exploit provided me with confirmation of the login name ‘**ashton**’ as well as the password ‘**leopoldo**’.
+
 User access achieved.
 
 # Exploitation: **Port 80 Open to Public Access**
@@ -93,6 +94,7 @@ I used nmap to scan for open ports on the target machine.
 **Achievements**
 
 Nmap scanned 256 IP addresses: I found 4 hosts up:
+
 Port 22 and 80 was of interest to me.
 
 # Exploitation: **Hashed Passwords**
@@ -121,24 +123,31 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ### Analysis: Identifying the Port Scan
 
 ● The port scan started on November 17, 2020 at approximately 0900hrs
+
 ● 125,219 connections occurred at the peak, the source IP was 192.168.1.90
+
 ● The sudden peaks in network traffic indicate that this was a port scan.
 
 ### Analysis: Finding the Request for a Hidden Directory
 
 ● The request started at 0700hrs on 17th November 2020
+
 ● 109,843 requests were made to access the **/secret_folder**
+
 ● The **/secret_folder** contained a hash that I could use to access the system using another employee’s credentials (Ryan)
+
 ● The **/secret_folder** also allowed me to upload a payload, thus exploiting other vulnerabilities.
 
 ### Analysis: Uncovering a Brute Force Attack
 
 ● 109,843 requests were made in the attack to access the **/secret_folder**.
+
 ● 30 attacks were successful. 100% of these attacks returned a 301 HTTP status code “Moved Permanently”.
 
 ### Analysis: Finding the WebDAV Connection
 
 ● 96 requests were made to access the **/webdav** directory.
+
 ● The primary requests were for the **passwd.dav** and **shell.php** files.
 
 # **Blue Team**
@@ -154,8 +163,11 @@ I recommend an alert be sent once 1000 connections occur in an hour.
 ## System Hardening
 
 ● Regularly run a system port scan to proactively detect and audit any open ports.
+
 ● Set server iptables to drop packet traffic when thresholds are exceeded
+
 ● Ensure the firewall is regularly patched to minimise new zero-day attacks.
+
 ● Ensure the firewall detects and cuts off the scan attempt in real time.
 
 # Mitigation: Finding the Request for the Hidden Directory
@@ -169,8 +181,11 @@ I would recommend a threshold of maximum 5 attempts per hour that would trigger 
 ## System Hardening
 
 ● Highly confidential folders should not be shared for public access
+
 ● Rename folders containing sensitive/private/company critical data
+
 ● Encrypt data contained within confidential folders
+
 ● Review IP addresses that cause an alert to be sent: either whitelist or block the IP addresses.
 
 # Mitigation: Preventing Brute Force Attacks
@@ -180,12 +195,15 @@ I would recommend a threshold of maximum 5 attempts per hour that would trigger 
 A HTTP 401 Unauthorized client error indicates that the request has ot been applied because it lacks valid authentication credentials for the target resource.
 
 ● I would detect future brute force attacks by setting an alarm that alerts if a 401 error is returned.
+
 ● The threshold I would set to activate this alarm would be when 10 errors are returned.
 
 ## System Hardening
 
 ● I would create a policy that locks out accounts for 30 minutes after 5 unsuccessful attempts.
+
 ● I would create a password policy that requires password complexity. I would compare the passwords to common password lists, and prevent users from reusing historical passwords.
+
 ● I would create a list of blocked IP addresses based on IP addresses that have 30 unsuccessful attempts in 6 months. If the IP address happens to be a staff member, re-education may be required.
 
 
@@ -221,7 +239,9 @@ The threshold for the alert to be sent is when one or more attempt is made.
 ## System Hardening
 
 ● Block all IP addresses other than whitelisted IP addresses (because reverse shells can be created over DNS, this action will only limit the risk of reverse shell connections, not eliminate the risk)
+
 ● Set access to the /webDAV folder to read only to prevent payloads from being uploaded
+
 ● Ensure only necessary ports are open
 
 [APDX003]
@@ -231,19 +251,29 @@ The threshold for the alert to be sent is when one or more attempt is made.
 ## The Red Team uncovered the following vulnerabilities:
 
 ● Accessed the system via HTTP Port 80
+
 ● Found Root accessibility
 
 ## The Blue Team also:
 
 ● Confirmed that a port scan occurred
+
 ● Found requests for a hidden directory
+
 ● Found evidence of a brute force attack
+
 ● Found requests to access critical system folders and files
+
 ● Found the occurrence of simplistic usernames and weak passwords
+
 ● Brute forced passwords to gain system access
+
 ● Cracked a hashed password to gain system access and use a shell script
+
 ● Identified a WebDAV vulnerability
+
 ● Identified a LFI vulnerability
+
 ● Identified Directory Indexing vulnerability CWE-548
 
 It is important to note that the above report is not an exhaustive review of the client’s I.T. systems or security policies. I have identified 9 vulnerabilities and provided mitigation strategies for several of them. What I have made clear however is that vulnerabilities can and will always be found. If you are a company executive, you should be constantly asking yourself: How prepared is my company for dealing with a cybersecurity breach?
@@ -260,7 +290,9 @@ The following pages are a list of references and relevant screenshots.
 ● APDX001
 
 ● APDX002
+
 https://support.stackpath.com/hc/en-us/articles/360001074623-How-To-Whitelist-StackPath-IP-Blocks-in-IPTables
 
 ● APDX003
+
 http://help.sonicwall.com/help/sw/eng/9530/26/2/3/content/Application_Control.065.23.htm
