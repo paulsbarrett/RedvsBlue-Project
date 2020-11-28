@@ -1,11 +1,7 @@
-
-
 # Capstone Engagement
 # Assessment, Analysis, and Hardening of a Vulnerable System
 
 ### Report Prepared by Paul Barrett
-
-
 
 
 
@@ -33,13 +29,11 @@ Once sufficient vulnerabilities have been identified, the blue team then approac
 
 Based on the above red team blue team assessment, mitigation strategies are then recommended.
 
-Please refer to the Appendix at the end of this report for additional references and screenshots. These references can be identified as *[APDX000]*
+Please refer to the Appendix at the end of this report for additional references and screenshots. These references can be identified as **[APDX000]**
 
 **Paul Barrett**
 **SOC Analyst**
 **27th November 2020**
-
-
 
 
 
@@ -65,7 +59,6 @@ IPv4: 192.168.1.105
 OS: Linux
 Hostname: Capstone
 Capstone Analysis
-
 
 
 
@@ -118,8 +111,6 @@ Replicating a vulnerable server
 
 
 
-
-
 # Vulnerability Assessment
 
 The assessment uncovered the following critical vulnerabilities in the target:
@@ -162,8 +153,6 @@ System access could be discovered by social engineering.
 
 
 
-
-
 # Vulnerability Assessment
 
 **Vulnerability**
@@ -198,8 +187,6 @@ An LFI vulnerability allows attackers to gain access to sensitive credentials. T
 
 
 
-
-
 # Vulnerability Assessment
 
 **Vulnerability**
@@ -216,21 +203,19 @@ If WebDAV is not configured properly, it can allow hackers to remotely modify we
 
 
 
-
-
 # Exploitation: **Brute Force Password**
 
-01
+
 
 **Tools & Processes**
 
-03
+
 
 I used Hydra which is already preinstalled on Kali Linux. I also required a password list – in this case I used rockyou.txt
 
 **Command**: $ hydra -l ashton -P /root/Downloads/rockyou.txt -s 80 -f 192.168.1.105 http-get /company_folders/secret_folder
 
-02
+
 
 **Achievements**
 
@@ -239,19 +224,14 @@ User access achieved.
 
 
 
-
-
 # Exploitation: **Port 80 Open to Public Access**
 
-03
 
-01
 
 **Tools & Processes**
 
 I used nmap to scan for open ports on the target machine.
 
-02
 
 **Achievements**
 
@@ -260,13 +240,9 @@ Port 22 and 80 was of interest to me.
 
 
 
-
-
 # Exploitation: **Hashed Passwords**
 
-01
 
-02
 
 **Tools & Processes**
 
@@ -280,9 +256,7 @@ The password ‘**linux4u**’ was used in conjunction with username **Ryan** to
 
 # Exploitation: **LFI vulnerability**
 
-01
 
-02
 
 **Tools & Processes**
 
@@ -290,7 +264,6 @@ The password ‘**linux4u**’ was used in conjunction with username **Ryan** to
 
 I used msfvenom and meterpreter to deliver a payload onto the vulnerable machine (the capstone server)
 Using the **multi/handler** exploit I could get access to the machine’s shell.
-
 
 
 
@@ -302,11 +275,8 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ### Analysis: Identifying the Port Scan
 
 ● The port scan started on November 17, 2020 at approximately 0900hrs
-
 ● 125,219 connections occurred at the peak, the source IP was 192.168.1.90
-
 ● The sudden peaks in network traffic indicate that this was a port scan.
-
 
 
 
@@ -314,11 +284,8 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ### Analysis: Finding the Request for a Hidden Directory
 
 ● The request started at 0700hrs on 17th November 2020
-
 ● 109,843 requests were made to access the **/secret_folder**
-
 ● The **/secret_folder** contained a hash that I could use to access the system using another employee’s credentials (Ryan)
-
 ● The **/secret_folder** also allowed me to upload a payload, thus exploiting other vulnerabilities.
 
 
@@ -328,7 +295,6 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ### Analysis: Uncovering a Brute Force Attack
 
 ● 109,843 requests were made in the attack to access the **/secret_folder**.
-
 ● 30 attacks were successful. 100% of these attacks returned a 301 HTTP status code “Moved Permanently”.
 
 
@@ -338,7 +304,6 @@ Using the **multi/handler** exploit I could get access to the machine’s shell.
 ### Analysis: Finding the WebDAV Connection
 
 ● 96 requests were made to access the **/webdav** directory.
-
 ● The primary requests were for the **passwd.dav** and **shell.php** files.
 
 
@@ -359,11 +324,8 @@ System Hardening
 I recommend an alert be sent once 1000 connections occur in an hour.
 
 ● Regularly run a system port scan to proactively detect and audit any open ports.
-
 ● Set server iptables to drop packet traffic when thresholds are exceeded
-
 ● Ensure the firewall is regularly patched to minimise new zero-day attacks.
-
 ● Ensure the firewall detects and cuts off the scan attempt in real time.
 
 
@@ -377,11 +339,8 @@ System Hardening
 To detect unauthorized accessrequests for hidden folders and files, I would set an alert when these requests occur.
 
 ● Highly confidential folders should not be shared for public access
-
 ● Rename folders containing sensitive/private/company critical data
-
 ● Encrypt data contained within confidential folders
-
 ● Review IP addresses that cause an alert to be sent: either whitelist or block the IP addresses.
 
 I would recommend a threshold of maximum 5 attempts per hour that would trigger an alert to be sent.
@@ -397,7 +356,6 @@ System Hardening
 A HTTP 401 Unauthorized client error indicates that the request has ot been applied because it lacks valid authentication credentials for the target resource.
 
 ● I would create a policy that locks out accounts for 30 minutes after 5 unsuccessful attempts.
-
 ● I would create a password policy that requires password complexity. I would compare the passwords to common password lists, and prevent users from reusing historical passwords.
 
 I would detect future brute force attacks by setting an alarm that alerts if a 401 error is returned.
@@ -440,7 +398,6 @@ Alarm
 I recommend that an alert be set for any traffic attempting to access port 4444. The threshold for the alert to be sent is when one or more attempt is made.
 
 ● Block all IP addresses other than whitelisted IP addresses (because reverse shells can be created over DNS, this action will only limit the risk of reverse shell connections, not eliminate the risk)
-
 ● Set access to the /webDAV folder to read only to prevent payloads from being uploaded
 
 I recommend setting an alert for any files being uploaded into the /webDAV folder.
@@ -457,29 +414,19 @@ The threshold for the alert to be sent is when one or more attempt is made.
 ## The Red Team uncovered the following vulnerabilities:
 
 ● Accessed the system via HTTP Port 80
-
 ● Found Root accessibility
 
 ## The Blue Team also:
 
 ● Confirmed that a port scan occurred
-
 ● Found requests for a hidden directory
-
 ● Found evidence of a brute force attack
-
 ● Found requests to access critical system folders and files
-
 ● Found the occurrence of simplistic usernames and weak passwords
-
 ● Brute forced passwords to gain system access
-
 ● Cracked a hashed password to gain system access and use a shell script
-
 ● Identified a WebDAV vulnerability
-
 ● Identified a LFI vulnerability
-
 ● Identified Directory Indexing vulnerability CWE-548
 
 It is important to note that the above report is not an exhaustive review of the client’s I.T. systems or security policies. I have identified 9 vulnerabilities and provided mitigation strategies for several of them. What I have made clear however is that vulnerabilities can and will always be found. If you are a company executive, you should be constantly asking yourself: How prepared is my company for dealing with a cybersecurity breach?
@@ -487,7 +434,6 @@ It is important to note that the above report is not an exhaustive review of the
 **Keep this fact in mind: It is not if you will get hacked, it is WHEN you will get hacked.**
 
 **I encourage you to take steps to minimising the impacts of when this occurs.**
-
 
 
 
